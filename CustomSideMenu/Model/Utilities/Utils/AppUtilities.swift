@@ -17,7 +17,86 @@ class AppUtilities {
         }
         return Singleton.instance
     }
-
+    
+    /*=======================================================
+     Function Name: isNumberOnly
+     Function Param : - String
+     Function Return Type : - bool
+     Function purpose :- check for enter text are numbers only
+     ========================================================*/
+    func isNumberOnly(strText : String) -> Bool {
+        if strText == "" {
+            return false
+        }
+        else {
+            let numberRegEx = "^[0-9]*$"
+            let numberTest = NSPredicate(format:"SELF MATCHES %@", numberRegEx)
+            let result = numberTest.evaluate(with: strText)
+            return result
+        }
+    }
+    
+    /*=======================================================
+     Function Name: isAlphabetOnly
+     Function Param : - String
+     Function Return Type : - bool
+     Function purpose :- check for enter text are alphabet only
+     ========================================================*/
+    func isAlphabetOnly(strText : String) -> Bool {
+        if strText == "" {
+            return false
+        }
+        else {
+            let numberRegEx = "^[A-Z]*$"
+            let numberTest = NSPredicate(format:"SELF MATCHES %@", numberRegEx)
+            let result = numberTest.evaluate(with: strText)
+            return result
+        }
+    }
+    
+    /*=======================================================
+     Function Name: isValidEmail
+     Function Param : - String
+     Function Return Type : - bool
+     Function purpose :- check for valid Email ID
+     ========================================================*/
+    func isValidEmail(strEmail : String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
+        let result = emailTest.evaluate(with: strEmail)
+        return result
+    }
+    
+    /*=======================================================
+     Function Name: isValidPhone
+     Function Param : - String
+     Function Return Type : - bool
+     Function purpose :- check for valid phone Number
+     ========================================================*/
+    func isValidPhone(strPhoneNo : String) -> Bool {
+        let PHONE_REGEX = "(?:(?:\\+|0{0,2})91(\\s*[\\- ]\\s*)?|[0 ]?)?[6789]\\d{9}|(\\d[ -]?) {10}\\d"
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", PHONE_REGEX)
+        let result =  phoneTest.evaluate(with: strPhoneNo)
+        return result
+    }
+    
+    /*=======================================================
+     Function Name: calculateTextHeight
+     Function Param : - String, CGFloat, UIFont
+     Function Return Type : - CGFloat
+     Function purpose :- Check Text Height
+     ========================================================*/
+    func calculateTextHeight(inString : String, width : CGFloat, font : UIFont) -> CGFloat
+    {
+        let messageString = inString
+        let attributes : [NSAttributedString.Key : Any]? = [NSAttributedString.Key(rawValue: NSAttributedString.Key.font.rawValue) : font]
+        let attributedString : NSAttributedString = NSAttributedString(string: messageString, attributes: attributes)
+        let rect : CGRect = attributedString.boundingRect(with: CGSize(width: width, height: CGFloat.greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil)
+        
+        let requredSize:CGRect = rect
+        return requredSize.height
+    }
+    
     /*=======================================================
     Function Name: addshadowToView
     Function Param : - Bool, Bool, Bool, Bool, CGFloat, UIView
